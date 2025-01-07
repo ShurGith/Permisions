@@ -14,12 +14,12 @@
          */
         public function register(): void
         {
-            Gate::define('admin-access', function (User $user) {
-                return $user->is_admin;
+            Gate::define('access-admin', function (User $user) {
+                return $user->hasRole('admin') || ($user->hasRole('editor') && $user->hasRole('author'));
             });
 
             Gate::define('manage-articles', function (User $user, Article $article) {
-                return Gate::allows('admin-access') || $user->id === $article->author_id;
+                return Gate::allows('access-admin') || $user->hasRole('editor') || ($user->hasRole('author') && $user->id === $article->author_id);
             });
         }
 
