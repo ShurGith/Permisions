@@ -1,3 +1,4 @@
+@php use App\Enums\RoleType; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -17,7 +18,7 @@
                         <tr>
                             <th class="text-start">Name</th>
                             <th class="text-start">Email address</th>
-                            <th class="text-start">IS Admin</th>
+                            <th class="text-start">Roles</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -27,11 +28,17 @@
                                 <td class="py-4">{{$user->name}}</td>
                                 <td class="py-4">{{ $user->email }}</td>
                                 <td class="py-4">
-                                    @if ($user->is_admin)
-                                        <span class="bg-green-400 text-white px-2 py-1 rounded-md">Yes</span>
-                                    @else
-                                        <span class="bg-red-400 text-white px-2 py-1 rounded-md">No</span>
-                                    @endif
+                                    @foreach($user->roles as $role)
+
+                                        @if ($user->hasRole('admin'))
+                                            <span class="bg-green-400 text-white px-2 py-1 rounded-md">
+                                                @else
+                                                    <span class="bg-red-400 text-white mr-2 px-2 py-1 rounded-md">
+                                                        @endif
+
+                                                        {{ $role->name }}
+                                                    </span>
+                                            @endforeach
                                 </td>
                                 <td class="flex py-4 justify-end">
                                     <a href="{{route('users.edit', ['user' => $user->id])}}"
