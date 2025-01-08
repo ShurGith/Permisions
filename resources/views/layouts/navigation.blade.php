@@ -18,11 +18,12 @@
                     <x-nav-link :href="route('articles.index')" :active="request()->routeIs('articles.index')">
                         {{ __('Articles') }}
                     </x-nav-link>
-                    @can('access-admin')
+
+                    @if(Auth::user()->hasRole('admin'))
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                             {{ __('Users') }}
                         </x-nav-link>
-                    @endcan
+                    @endif
                 </div>
             </div>
 

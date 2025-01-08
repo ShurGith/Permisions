@@ -23,8 +23,10 @@
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-        Route::resource('articles', ArticlesController::class)->except('show');
-        Route::middleware('can:access-admin')->resource('users', UsersController::class)->except(['show', 'create', 'store']);
+        //Route::resource('articles', ArticlesController::class)->except('show');
+        Route::middleware('role:admin,author,editor')->resource('articles', ArticlesController::class)->except('show');
+        // Route::middleware('can:access-admin')->resource('users', UsersController::class)->except(['show', 'create', 'store']);
+        Route::middleware('role:admin')->resource('users', UsersController::class)->except(['show', 'create', 'store']);
 
     });
 

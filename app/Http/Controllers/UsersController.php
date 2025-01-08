@@ -7,9 +7,6 @@
 
     class UsersController extends Controller
     {
-        /**
-         * Display a listing of the resource.
-         */
         public function index()
         {
             return view('users.index', [
@@ -17,9 +14,6 @@
             ]);
         }
 
-        /**
-         * Show the form for editing the specified resource.
-         */
         public function edit(User $user)
         {
             return view('users.edit', [
@@ -27,18 +21,12 @@
             ]);
         }
 
-        /**
-         * Update the specified resource in storage.
-         */
         public function update(UserUpdateRequest $request, User $user)
         {
             $user->update($request->all());
             return redirect()->route('users.index');
         }
 
-        /**
-         * Remove the specified resource from storage.
-         */
         public function destroy(User $user)
         {
             $user->delete();

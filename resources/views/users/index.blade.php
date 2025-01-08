@@ -35,7 +35,6 @@
                                                 @else
                                                     <span class="bg-red-400 text-white mr-2 px-2 py-1 rounded-md">
                                                         @endif
-
                                                         {{ $role->name }}
                                                     </span>
                                             @endforeach
