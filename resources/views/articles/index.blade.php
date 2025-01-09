@@ -1,3 +1,4 @@
+@php use App\Models\Article; @endphp
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -11,14 +12,14 @@
                 <div class="p-6 text-gray-900">
                     <div class="flex justify-between pb-10">
                         <h3 class="bold text-xl">Articles</h3>
-                        @role('admin', 'author')
-                        <div>
-                            <a href="{{ route('articles.create') }}"
-                               class="bg-indigo-500 hover:bg-indigo-600 py-2 px-3 rounded-md text-white">
-                                Create
-                            </a>
-                        </div>
-                        @endrole
+                        @can('create',Article::class)
+                            <div>
+                                <a href="{{ route('articles.create') }}"
+                                   class="bg-indigo-500 hover:bg-indigo-600 py-2 px-3 rounded-md text-white">
+                                    Create
+                                </a>
+                            </div>
+                        @endcan
                     </div>
                     <table class="w-full ">
                         <thead>
@@ -38,7 +39,7 @@
                                 <td class="py-4">{{ $article->is_published ? 'Yes' : 'No' }}</td>
                                 <td class="py-4">{{ $article->created_at }}</td>
                                 <td class="flex py-4 justify-end">
-                                    @can('manage-articles', $article)
+                                    @can('update', $article)
                                         <a href="{{route('articles.edit', ['article' => $article->id])}}"
                                            class="bg-gray-500 hover:bg-gray-600 mr-1 py-2 px-3 rounded-md text-white">
                                             Edit

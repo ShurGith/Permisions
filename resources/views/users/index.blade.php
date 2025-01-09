@@ -29,8 +29,7 @@
                                 <td class="py-4">{{ $user->email }}</td>
                                 <td class="py-4">
                                     @foreach($user->roles as $role)
-
-                                        @if ($user->hasRole('admin'))
+                                        @if ($role->name =='admin')
                                             <span class="bg-green-400 text-white px-2 py-1 rounded-md">
                                                 @else
                                                     <span class="bg-red-400 text-white mr-2 px-2 py-1 rounded-md">
@@ -44,17 +43,19 @@
                                        class="bg-gray-500 hover:bg-gray-600 mr-1 py-2 px-3 rounded-md text-white">
                                         Edit
                                     </a>
-                                    <form
-                                        method="post" action="{{ route('users.destroy', ['user' => $user->id]) }}"
-                                        onsubmit="return confirm('Are you sure you want to delete this user?')"
-                                    >
-                                        @csrf
-                                        @method('delete')
-                                        <button
-                                            class="bg-red-400 hover:bg-red-500 py-2 px-3 rounded-md text-white">
-                                            Delete
-                                        </button>
-                                    </form>
+                                    @if(Auth::user()->id !== $user->id)
+                                        <form
+                                            method="post" action="{{ route('users.destroy', ['user' => $user->id]) }}"
+                                            onsubmit="return confirm('Are you sure you want to delete this user?')"
+                                        >
+                                            @csrf
+                                            @method('delete')
+                                            <button
+                                                class="bg-red-400 hover:bg-red-500 py-2 px-3 rounded-md text-white">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
